@@ -12,14 +12,15 @@ import torch.nn as nn
 import torch.optim as optim
 from torchmetrics.regression import R2Score
 
-# GLOBAL PATHS & VARIABLES
-OUTPUT_DIR = Path().resolve().parent / "outputs"
 
-try:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-except Exception as e:
-    print("❌ Permission Error: Could not access or execute files in current folder.")
-    raise
+def get_save_path():
+    OUTPUT_DIR = Path().resolve() / "outputs"
+    try:
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    except Exception as e:
+        print("❌ Permission Error: Could not access or execute files in current folder.")
+        raise
+    return OUTPUT_DIR
 
 
 def train_epoch(
@@ -32,12 +33,12 @@ def train_epoch(
         inputs, targets = inputs.to(device), targets.to(device)
         optimizer.zero_grad()
         if ampscaler:
-            with torch.amp.autocast(device_type="cuda"):
+            with torch.amp.autocast(device_type=device.type):
                 outputs = model(inputs)
                 loss = criterion(outputs, targets)
             ampscaler.scale(loss).backward()
-            # ampscaler.unscale_(optimizer)
-            # torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            # ampscaler.unscale_(optimizer) # for debugging
+            # torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0) # for debugging
             ampscaler.step(optimizer)
             ampscaler.update()
         else:
@@ -101,8 +102,8 @@ def train_model(
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
         optimizer, mode="min", factor=0.5, patience=5, min_lr=1e-8
     )
-    ampscaler = torch.amp.GradScaler(device="cuda")
-    model_dir = OUTPUT_DIR / tgt
+    ampscaler = torch.amp.GradScaler(device=device.type)
+    model_dir = get_save_path() / tgt
     model_dir.mkdir(parents=True, exist_ok=True)
     model_save_path = model_dir / f"{tgt}_{model_name}.pth"
     logs_save_path = model_dir / f"logs_{tgt}_{model_name}.csv"
@@ -112,6 +113,7 @@ def train_model(
     train_val_logs = []
     early_stop = False
     epochs_no_improve = 0
+    print("Training started....")
     for epoch in range(max_epochs):
         # Break loop if early stop triggered
         if early_stop:
@@ -157,11 +159,13 @@ def train_model(
             }
         )
         print(
-            f"Epoch: {epoch}/{max_epochs - 1} | "
+            f"Epoch: {epoch+1}/{max_epochs} | "
             f"Train Loss: {train_loss:.5f}, Train R²: {train_r2:.4f} | "
             f"Val Loss: {val_loss:.5f}, Val R²: {val_r2:.4f} | "
             f"LR: {curr_lr}, Time: {round(elapsed, 2)} secs"
         )
-
+    if not model_save_path.exists():
+        torch.save(model.state_dict(), model_save_path)
     train_val_df = pd.DataFrame(train_val_logs)
     train_val_df.to_csv(logs_save_path, index=False)
+    print("Training Complete....!")

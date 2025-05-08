@@ -10,7 +10,7 @@
                 }
             },
             "Multi-Layered Perceptron": {
-                "class-name": "MLP",
+                "class_name": "MLP",
                 "params": {
                     "input_dim": 5,
                     "hidden_size": 256,
@@ -69,7 +69,7 @@
                 }
             },
             "Multi-Layered Perceptron": {
-                "class-name": "MLP",
+                "class_name": "MLP",
                 "params": {
                     "input_dim": 5,
                     "hidden_size": 256,
@@ -128,7 +128,7 @@
                 }
             },
             "Multi-Layered Perceptron": {
-                "class-name": "MLP",
+                "class_name": "MLP",
                 "params": {
                     "input_dim": 5,
                     "hidden_size": 128,
@@ -187,7 +187,7 @@
                 }
             },
             "Multi-Layered Perceptron": {
-                "class-name": "MLP",
+                "class_name": "MLP",
                 "params": {
                     "input_dim": 5,
                     "hidden_size": 128,
@@ -246,7 +246,7 @@
                 }
             },
             "Multi-Layered Perceptron": {
-                "class-name": "MLP",
+                "class_name": "MLP",
                 "params": {
                     "input_dim": 5,
                     "hidden_size": 128,
@@ -305,7 +305,7 @@
                 }
             },
             "Multi-Layered Perceptron": {
-                "class-name": "MLP",
+                "class_name": "MLP",
                 "params": {
                     "input_dim": 6,
                     "hidden_size": 128,

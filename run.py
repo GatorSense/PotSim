@@ -72,13 +72,12 @@ def get_model(mdata, mdl_id, seq_len=None):
         "linear": ("Linear Regression", "linearregression"),
         "mlp": ("Multi-Layered Perceptron", "mlp"),
         "cnn": ("1-D Convolutional Neural Network", "cnn"),
-        "tcn": ("Temporal Convolutional Network", "cnn"),
+        "tcn": ("Temporal Convolutional Network", "tcn"),
         "lstm": ("Long Short-Term Memory", "lstm"),
         "transformer": ("EncoderOnlyTransformer", "transformer")
     }
     if mdl_id not in model_map:
         raise NameError(f"Model class for '{mdl_id}' not found.")
-    
     model_key, submodule_name = model_map[mdl_id]
     try:
         submodule = importlib.import_module(f"models.{submodule_name}")
@@ -117,10 +116,8 @@ def run_training(model_name, model, train_set, val_set, feats, tgt, max_epochs,
     print(X_train.shape, y_train.shape, X_val.shape, y_val.shape, end="\n")
 
     #Creating dataloader
-    train_loader = DataLoader(TensorDataset(X_train, y_train), prefetch_factor=4,
-                              pin_memory=True, batch_size=b_sz, shuffle=True)
-    val_loader = DataLoader(TensorDataset(X_val, y_val), prefetch_factor=4,
-                            pin_memory=True, batch_size=b_sz, shuffle=False)
+    train_loader = DataLoader(TensorDataset(X_train, y_train),num_workers=10,prefetch_factor=4,pin_memory=True, batch_size=b_sz, shuffle=True)
+    val_loader = DataLoader(TensorDataset(X_val, y_val),num_workers=4,prefetch_factor=4,pin_memory=True, batch_size=b_sz, shuffle=False)
     
     print(f"Training on device: {device}")
     summary(model)
@@ -151,7 +148,7 @@ def run_inference(model_name, model, model_dir, test_set, feats, tgt,
     print(X_test.shape, y_test.shape)
 
     data_loader = DataLoader(TensorDataset(X_test, y_test), batch_size=b_sz, 
-                             prefetch_factor=4, pin_memory=True, shuffle=False)
+                             num_workers=4,prefetch_factor=4,pin_memory=True, shuffle=False)
     mae, rmse, nrmse, r2 = evaluate.evaluate_model(
         model, data_loader, tgt, device=device, scaler_path=scaler_filepath
         )

@@ -1,15 +1,19 @@
 import numpy as np
 import pandas as pd
 
-def split_train_val_test(df):
+def split_train_val_test(
+        df, train_years=[2004,2016],
+        val_years=[2016, 2020],
+        test_years=[2020, 2024]
+    ):
     # 1. Define year splits
-    train_years = list(range(2004, 2016))  # 12 years
-    val_years = list(range(2016, 2020))    # 4 years
-    test_years = list(range(2020, 2024))    # 4 years
+    tr_yrs = list(range(*train_years))
+    vl_yrs = list(range(*val_years))
+    ts_yrs = list(range(*test_years))
     
-    train_data = df[df["Year"].isin(train_years)]
-    val_data = df[df["Year"].isin(val_years)]
-    test_data = df[df["Year"].isin(test_years)]
+    train_data = df[df["Year"].isin(tr_yrs)]
+    val_data = df[df["Year"].isin(vl_yrs)]
+    test_data = df[df["Year"].isin(ts_yrs)]
 
     return train_data, val_data, test_data
 

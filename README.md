@@ -45,7 +45,7 @@ python run.py train -tgt -m  [options]
 **Example:**
 
 ```bash
-python run.py train -tgt="NTotL1" -m="lstm" -tdata="train_split" -vdata="val_split_" -bs 128 -lr 0.001 -ep 50 -sl 20 -d cuda
+python run.py train -tgt="NTotL1" -m="lstm" -tdata="train_split" -vdata="val_split" -bs=256 -lr=0.001 -ep=10 -sl=15 -d="cuda"
 ```
 
 ---
@@ -71,7 +71,7 @@ python run.py test -tgt  -m  -data  [options]
 **Example:**
 
 ```bash
-python run.py test -tgt="NTotL1" -m="lstm"-data="test_split" -mdir="saves" -bs=15 -sl=15 -d="cuda"
+python run.py test -tgt="NTotL1" -m="lstm"-data="test_split" -mdir="saves" -bs=256 -sl=15 -d="cuda"
 ```
 
 ---

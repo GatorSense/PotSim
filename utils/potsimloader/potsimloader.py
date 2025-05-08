@@ -175,7 +175,7 @@ def _process_output(
     Args:
         data (Union[pl.LazyFrame, pl.DataFrame]): Input data to process.
         lazy (bool, optional): Whether to return LazyFrame. Defaults to False.
-        to_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to True.
+        as_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to True.
 
     Returns:
         DataFrameType: Processed data in specified format.
@@ -262,7 +262,7 @@ def read_data(
         usecols (Optional[List], optional): List of columns to select. Defaults to None.
         scenarios (Optional[Dict[str, Any]], optional): Dictionary of scenario filters. Defaults to None.
         lazy (bool, optional): Whether to return LazyFrame. Defaults to False.
-        to_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
+        as_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
 
     Returns:
         DataFrameType: Processed data in specified format.
@@ -332,7 +332,7 @@ def apply_filter(
         data (DataFrameType): Input data to filter.
         filters (Dict[str, Any]): Dictionary of column-value pairs for filtering.
         lazy (bool, optional): Whether to return LazyFrame. Defaults to False.
-        to_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
+        as_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
 
     Returns:
         DataFrameType: Filtered data in specified format.
@@ -419,7 +419,7 @@ def add_scenarios(
         scenarios (Dict[str, Any]): Dictionary of new scenarios to add.
         from_data (Optional[Union[DataFrameType, PathType]], optional): Source data. Defaults to None.
         lazy (bool, optional): Whether to return LazyFrame. Defaults to False.
-        to_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
+        as_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
 
     Returns:
         DataFrameType: Updated dataset with new scenarios.
@@ -473,7 +473,7 @@ def add_features(
         features (List[str]): List of feature names to add.
         from_data (Optional[Union[DataFrameType, PathType]], optional): Source data. Defaults to None.
         lazy (bool, optional): Whether to return LazyFrame. Defaults to False.
-        to_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
+        as_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
 
     Returns:
         DataFrameType: Updated dataset with new features.
@@ -520,7 +520,7 @@ def add_data(
         features (Optional[List[str]], optional): List of features to add. Defaults to None.
         scenarios (Optional[Dict[str, Any]], optional): Dictionary of scenarios to add. Defaults to None.
         lazy (bool, optional): Whether to return LazyFrame. Defaults to False.
-        to_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
+        as_pandas (bool, optional): Whether to convert to Pandas DataFrame. Defaults to False.
 
     Returns:
         DataFrameType: Updated dataset with new features and scenarios.

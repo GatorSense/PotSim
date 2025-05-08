@@ -38,8 +38,8 @@ def random_sample_train_val_test(
     np.random.shuffle(unique_groups)
 
     n = len(unique_groups)
-    n_train = int(split(0) * n)
-    n_val = int(split(1) * n)
+    n_train = int(split[0] * n)
+    n_val = int(split[1] * n)
     print(
         f"Scenarios: train({n_train * len(train_years)}), val({n_val * len(val_years)}), test({(n - n_train - n_val) * len(test_years)})"
     )

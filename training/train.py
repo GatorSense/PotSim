@@ -18,7 +18,9 @@ def get_save_path():
     try:
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     except Exception as e:
-        print("❌ Permission Error: Could not access or execute files in current folder.")
+        print(
+            "❌ Permission Error: Could not access or execute files in current folder."
+        )
         raise
     return OUTPUT_DIR
 
@@ -92,16 +94,22 @@ def train_model(
     max_epochs,
     min_tgt,
     max_tgt,
+    criterion=None,
+    optimizer=None,
+    scheduler=None,
     early_stop_patience: int = 10,
     device=torch.device("cpu"),
     min_loss_reduction=1e-4,
 ):
     model.to(device)
-    criterion = nn.MSELoss()
-    optimizer = optim.SGD(model.parameters(), lr=lr)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode="min", factor=0.5, patience=5, min_lr=1e-8
-    )
+    if criterion is None:
+        criterion = nn.MSELoss()
+    if optimizer is None:
+        optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9)
+    if scheduler is None:
+        scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer, mode="min", factor=0.5, patience=5, min_lr=1e-8
+        )
     ampscaler = torch.amp.GradScaler(device=device.type)
     model_dir = get_save_path() / tgt
     model_dir.mkdir(parents=True, exist_ok=True)
@@ -150,7 +158,7 @@ def train_model(
         curr_lr = optimizer.param_groups[0]["lr"]
         train_val_logs.append(
             {
-                "epoch": epoch,
+                "epoch": epoch+1,
                 "train_loss": train_loss,
                 "val_loss": val_loss,
                 "train_r2": train_r2,
@@ -159,7 +167,7 @@ def train_model(
             }
         )
         print(
-            f"Epoch: {epoch+1}/{max_epochs} | "
+            f"Epoch: {epoch + 1}/{max_epochs} | "
             f"Train Loss: {train_loss:.5f}, Train R²: {train_r2:.4f} | "
             f"Val Loss: {val_loss:.5f}, Val R²: {val_r2:.4f} | "
             f"LR: {curr_lr}, Time: {round(elapsed, 2)} secs"

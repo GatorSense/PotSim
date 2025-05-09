@@ -2,6 +2,10 @@ import random
 import numpy as np
 import pandas as pd
 
+def set_random_seed(seed):
+    np.random.seed(seed)  # Set seed for NumPy
+    random.seed(seed)  # Set seed for Python's random module
+
 
 def split_train_val_test(
     df,
@@ -29,15 +33,12 @@ def random_sample_train_val_test(
     test_years=list(range(2020, 2024)),
     seed=42,
 ):
-    np.random.seed(seed)
-    random.seed(seed)
-
     if sum(split) != 1.0:
         raise ValueError("Splits should total to 1.0 e.g. (0.6,0.2,0.2)")
-
     scenario_vars = ["PlantingDay", "Treatment", "NFirstApp", "IrrgDep", "IrrgThresh"]
     groups = df.groupby(scenario_vars, observed=True, sort=False)
     unique_groups = list(groups.groups.keys())
+    set_random_seed(seed=seed)
     np.random.shuffle(unique_groups)
 
     n = len(unique_groups)

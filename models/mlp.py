@@ -26,17 +26,21 @@ class MLP(nn.Module):
         """
 
         super(MLP, self).__init__()
+        self.input_dim = input_dim
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.dropout = dropout
         layers = []
-        for i in range(num_layers):
-            layers.append(nn.Linear(input_dim, hidden_size))
+        for i in range(self.num_layers):
+            layers.append(nn.Linear(self.input_dim, self.hidden_size))
             layers.append(nn.ReLU())
-            layers.append(nn.BatchNorm1d(hidden_size))
-            layers.append(nn.Dropout(dropout))
-            if i + 1 == num_layers:
-                layers.append(nn.Linear(hidden_size, 1))
+            layers.append(nn.BatchNorm1d(self.hidden_size))
+            layers.append(nn.Dropout(self.dropout))
+            if i + 1 == self.num_layers:
+                layers.append(nn.Linear(self.hidden_size, 1))
                 break
-            input_dim = hidden_size
-            hidden_size = hidden_size // 2
+            self.input_dim = self.hidden_size
+            self.hidden_size = self.hidden_size // 2
         self.layers = nn.Sequential(*layers)
     
     def forward(self, x: torch.Tensor):

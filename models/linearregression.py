@@ -24,7 +24,8 @@ class LinearRegression(nn.Module):
         """
 
         super(LinearRegression, self).__init__()
-        self.linear = nn.Linear(input_dim, 1)
+        self.input_dim = input_dim
+        self.linear = nn.Linear(in_features=self.input_dim, out_features=1)
 
     def forward(self, x: torch.Tensor):
         """Perform the forward pass through the model

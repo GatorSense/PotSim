@@ -24,18 +24,22 @@ class TCNBlock(nn.Module):
 class TCN(nn.Module):
     def __init__(self, input_dim, num_channels=[32, 16, 8], kernel_size=3, dropout=0.2):
         super(TCN, self).__init__()
+        self.input_dim = input_dim
+        self.num_channels = num_channels
+        self.kernel_size = kernel_size
+        self.dropout = dropout
         layers = []
-        num_levels = len(num_channels)
+        num_levels = len(self.num_channels)
         for i in range(num_levels):
             dilation = 2 ** i
-            in_channels = input_dim if i == 0 else num_channels[i-1]
-            out_channels = num_channels[i]
+            in_channels = self.input_dim if i == 0 else self.num_channels[i-1]
+            out_channels = self.num_channels[i]
             layers.append(
-                TCNBlock(in_channels, out_channels, kernel_size=kernel_size, 
-                         dilation=dilation, dropout=dropout)
+                TCNBlock(in_channels, out_channels, kernel_size=self.kernel_size, 
+                         dilation=dilation, dropout=self.dropout)
             )
         self.network = nn.Sequential(*layers)
-        self.fc = nn.Linear(num_channels[-1], 1)
+        self.fc = nn.Linear(self.num_channels[-1], 1)
 
     def forward(self, x):
         x = x.transpose(1, 2)

@@ -1,10 +1,11 @@
 import torch
 import torch.nn as nn
 
+
 class CNN1D(nn.Module):
-    """A 1D Convolutional Neural Network model that consists three convolutional blocks 
-    followed by adaptive average pooling and a final linear layer for prediction. Each 
-    convulational block includes Conv1D, ReLU Activation, BatchNorm, and Dropout 
+    """A 1D Convolutional Neural Network model that consists three convolutional blocks
+    followed by adaptive average pooling and a final linear layer for prediction. Each
+    convulational block includes Conv1D, ReLU Activation, BatchNorm, and Dropout
     (except the last block).
 
     Attributes:
@@ -18,7 +19,9 @@ class CNN1D(nn.Module):
         >>> output = model(x)  # Shape: [32, 1]
     """
 
-    def __init__(self, input_dim: int, hidden_size=64, kernel_size=3, padding=1, dropout=0.2):
+    def __init__(
+        self, input_dim: int, hidden_size=64, kernel_size=3, padding=1, dropout=0.2
+    ):
         """Initialize the 1D CNN model.
 
         Args:
@@ -30,28 +33,44 @@ class CNN1D(nn.Module):
         """
 
         super(CNN1D, self).__init__()
+        self.input_dim = input_dim
+        self.hidden_size = hidden_size
+        self.kernel_size = kernel_size
+        self.padding = padding
+        self.dropout = dropout
         self.conv_layers = nn.Sequential(
             # First conv block
-            nn.Conv1d(input_dim, hidden_size, kernel_size, padding),
+            nn.Conv1d(
+                self.input_dim,
+                self.hidden_size,
+                kernel_size=self.kernel_size,
+                padding=self.padding,
+            ),
             nn.ReLU(),
-            nn.BatchNorm1d(hidden_size),
-            nn.Dropout(dropout),
-            
+            nn.BatchNorm1d(self.hidden_size),
+            nn.Dropout(self.dropout),
             # Second conv block
-            nn.Conv1d(hidden_size, hidden_size // 2, kernel_size, padding),
+            nn.Conv1d(
+                self.hidden_size,
+                self.hidden_size // 2,
+                kernel_size=self.kernel_size,
+                padding=self.padding,
+            ),
             nn.ReLU(),
-            nn.BatchNorm1d(hidden_size // 2),
-            nn.Dropout(dropout),
-            
+            nn.BatchNorm1d(self.hidden_size // 2),
+            nn.Dropout(self.dropout),
             # Third conv block for better feature extraction
-            nn.Conv1d(hidden_size // 2, 16, kernel_size, padding),
+            nn.Conv1d(
+                self.hidden_size // 2,
+                16,
+                kernel_size=self.kernel_size,
+                padding=self.padding,
+            ),
             nn.ReLU(),
             nn.BatchNorm1d(16),
-            
-            nn.AdaptiveAvgPool1d(1)
+            nn.AdaptiveAvgPool1d(1),
         )
         self.fc_out = nn.Linear(16, 1)
-
 
     def forward(self, x):
         """Perform the forward pass through the model.

@@ -4,7 +4,10 @@ import pandas as pd
 
 
 def split_train_val_test(
-    df, train_years=[2004, 2016], val_years=[2016, 2020], test_years=[2020, 2024]
+    df,
+    train_years=list(range(2004, 2017)),
+    val_years=list(range(2016, 2021)),
+    test_years=list(range(2020, 2024)),
 ):
     # 1. Define year splits
     tr_yrs = list(range(*train_years))
@@ -21,17 +24,17 @@ def split_train_val_test(
 def random_sample_train_val_test(
     df,
     split=(0.6, 0.2, 0.2),
-    train_years=[2004, 2016],
-    val_years=[2016, 2020],
-    test_years=[2020, 2024],
-    seed= 42
+    train_years=list(range(2004, 2017)),
+    val_years=list(range(2016, 2021)),
+    test_years=list(range(2020, 2024)),
+    seed=42,
 ):
     np.random.seed(seed)
     random.seed(seed)
 
     if sum(split) != 1.0:
         raise ValueError("Splits should total to 1.0 e.g. (0.6,0.2,0.2)")
-    
+
     scenario_vars = ["PlantingDay", "Treatment", "NFirstApp", "IrrgDep", "IrrgThresh"]
     groups = df.groupby(scenario_vars, observed=True, sort=False)
     unique_groups = list(groups.groups.keys())
@@ -49,7 +52,9 @@ def random_sample_train_val_test(
     test_set = unique_groups[n_train + n_val :]
 
     # Split data between train, val, test fro years to reduce matching
-    train_data, val_data, test_data = split_train_val_test(df, train_years, val_years, test_years)
+    train_data, val_data, test_data = split_train_val_test(
+        df, train_years, val_years, test_years
+    )
 
     def _filter_scenarios(_data, _dset):
         _dset = pd.DataFrame(_dset, columns=scenario_vars)

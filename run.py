@@ -173,7 +173,11 @@ def get_model_state_scaler(mdl_name, mdl_dir, tgt):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    git_link = "https://github.com/GatorSense/PotSim"
+    parser = argparse.ArgumentParser(
+        epilog=f"For more details or help visit: \x1b]8;;{git_link}\x1b\\{git_link}\x1b]8;;\x1b\\",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     valid_tgts = ["NTotL1","NTotL2","SWatL1","SWatL2","NLeach","NPlantUp"]
     model_choices = ['linear', 'mlp', 'cnn', 'tcn', 'lstm', 'transformer']
     subparsers = parser.add_subparsers(dest="task", required=True, help="Task to run.'")

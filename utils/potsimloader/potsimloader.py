@@ -312,7 +312,7 @@ def read_data(
         if "Date" not in weather_selection or "Date" not in data_selection:
             raise ValueError("Dataset must contain 'Date' column for joining")
         weather_data = weather_data.select(weather_selection)
-        data = data.join(weather_data, on="Date", how="inner", validate="m:1")
+        data = data.join(weather_data, on="Date", how="inner")
     if usecols is not None:
         data = data.select(usecols)
     return _process_output(data, lazy, as_pandas)

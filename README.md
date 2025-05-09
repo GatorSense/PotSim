@@ -71,7 +71,7 @@ python run.py test -tgt  -m  -data  [options]
 **Example:**
 
 ```bash
-python run.py test -tgt="NTotL1" -m="lstm"-data="test_split" -mdir="saves" -bs=256 -sl=15 -d="cuda"
+python run.py test -tgt="NTotL1" -m="lstm" -data="test_split" -mdir="saves" -bs=256 -sl=15 -d="cuda"
 ```
 
 ---

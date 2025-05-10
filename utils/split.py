@@ -13,14 +13,10 @@ def split_train_val_test(
     val_years=list(range(2016, 2021)),
     test_years=list(range(2020, 2024)),
 ):
-    # 1. Define year splits
-    tr_yrs = list(range(*train_years))
-    vl_yrs = list(range(*val_years))
-    ts_yrs = list(range(*test_years))
 
-    train_data = df[df["Year"].isin(tr_yrs)]
-    val_data = df[df["Year"].isin(vl_yrs)]
-    test_data = df[df["Year"].isin(ts_yrs)]
+    train_data = df[df["Year"].isin(train_years)]
+    val_data = df[df["Year"].isin(val_years)]
+    test_data = df[df["Year"].isin(test_years)]
 
     return train_data, val_data, test_data
 
@@ -28,7 +24,7 @@ def split_train_val_test(
 def random_sample_train_val_test(
     df,
     split=(0.6, 0.2, 0.2),
-    train_years=list(range(2004, 2017)),
+    train_years=list(range(2004, 2016)),
     val_years=list(range(2016, 2021)),
     test_years=list(range(2020, 2024)),
     seed=42,

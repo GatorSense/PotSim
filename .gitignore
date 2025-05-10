@@ -8,3 +8,4 @@
 !data/test_split.parquet
 temp_*.ipynb
 dump.py
+README_template.md

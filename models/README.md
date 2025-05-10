@@ -5,6 +5,7 @@ This repository is the official suplemental code for [PotSim Dataset](https://do
 ## Model Architectures
 
 ### LinearRegression
+A simple Linear Regression model represnting a linear function `y = wx + b`, where `w` is weight vector and `b` is  a bias vector. It uses PyTorch's `nn`.Linear module to implement transformation.
 
 **Arguments:**
 
@@ -15,6 +16,7 @@ This repository is the official suplemental code for [PotSim Dataset](https://do
 ---
 
 ### MLP
+A Multi-Layer Perceptron (MLP) model i.e. feedforward neural network using PyTorch's `nn.Module` with adjustable layers, hidden sizes, and dropout.
 
 **Arguments:**
 
@@ -28,6 +30,7 @@ This repository is the official suplemental code for [PotSim Dataset](https://do
 ---
 
 ### CNN
+A 1D Convolutional Neural Network model that consists three convolutional blocks followed by adaptive average pooling and a final linear layer for prediction. Each convulational block includes `Conv1D`, `ReLU` Activation, `BatchNorm`, and `Dropout` (except the last block).
 
 **Arguments:**
 

@@ -7,6 +7,7 @@ This repository contains the official implementation associated with this paper.
 # Description
 
 PotSim is a large-scale simulated agricultural dataset specifically designed for AI-driven research on potato cultivation. This dataset is grounded in real-world crop management scenarios and extrapolated to approximately 4.9 million hypothetical crop management scenarios. It encompasses diverse factors including varying planting dates, fertilizer application rates and timings, irrigation strategies, and 24 years of weather data. The resulting dataset comprises over 675 million daily simulation records, offering an extensive and realistic framework for agricultural AI research.
+
 ---
 
 

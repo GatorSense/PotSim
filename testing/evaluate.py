@@ -1,7 +1,9 @@
 import torch
 import numpy as np
+import pandas as pd
 from sklearn.metrics import r2_score, mean_absolute_error, root_mean_squared_error
 from utils import scaler
+from utils import preprocessing as ppsr
 
 def evaluate_model(model, data_loader, tgt, device, scaler_path):
     model.to(device)
@@ -38,40 +40,41 @@ def compute_metrics(y_true, y_pred, min_tgt, max_tgt):
     return mae, rmse, nrmse, r2
 
 
-# def evaluate_by_scenario(model, data, feature_cols, target_col, device, 
-#                          scaler_path, seq_len=None):
-#     model.to(device)
-#     model.eval()
-#     results = []
-#     scenario_vars = ['Year', 'PlantingDay', 'Treatment', 'IrrgDep', 'IrrgThresh', 'NFirstApp']
-#     scenario_groups = data.groupby(scenario_vars, observed=True)
-#     num_groups = len(scenario_groups)
-    
-#     for i, (scenario_name, group) in enumerate(scenario_groups):
-#         X, y_true = butils.process_data(group, feature_cols, target_col, scaler_path=scaler_path, 
-#                                         mode="transform", seq_len=seq_len)
-#         X_tensor = torch.FloatTensor(X).to(device)
-#         with torch.inference_mode():
-#             y_pred = model(X_tensor)
+
+def evaluate_by_scenario(model, data, feats, tgt, device, 
+                         scaler_path, seq_len=None):
+    model.to(device)
+    model.eval()
+    results = []
+    scenario_vars = ['Year', 'PlantingDay', 'Treatment', 'IrrgDep', 'IrrgThresh', 'NFirstApp']
+    scenario_groups = data.groupby(scenario_vars, observed=True)
+    num_groups = len(scenario_groups)
+    for i, (scenario_name, group) in enumerate(scenario_groups):
+        X, y_true = ppsr.process_data(group, feats=feats, tgt=tgt, scaler_path=scaler_path, 
+                                        mode="transform", seq_len=seq_len)
+        X_tensor = torch.FloatTensor(X).to(device)
+        min_tgt, max_tgt = scaler.get_min_max(tgt, scaler_path)
+        with torch.inference_mode():
+            y_pred = model(X_tensor)
         
-#         y_true = y_true.numpy().flatten()
-#         y_pred = y_pred.cpu().numpy().flatten()
+        y_true = y_true.numpy().flatten()
+        y_pred = y_pred.cpu().numpy().flatten()
         
-#         # Denormalize before calculating metrics
-#         y_pred_denorm = butils.inverse_normalize(y_pred, target_col, scaler_path=scaler_path)
-#         y_true_denorm = butils.inverse_normalize(y_true, target_col, scaler_path=scaler_path)     
+        # Denormalize before calculating metrics
+        y_pred_denorm = scaler.inverse_normalize(y_pred, tgt, scaler_path=scaler_path)
+        y_true_denorm = scaler.inverse_normalize(y_true, tgt, scaler_path=scaler_path)     
         
-#         mae, rmse, r2 = butils.compute_metrics(y_true_denorm, y_pred_denorm)
-#         results.append({
-#             "Scenario": "_".join([str(s) for s in scenario_name]),
-#             "mae": mae,
-#             "rmse": rmse,
-#             "r2": r2
-#         })
-#         pgrs = (i+1) * 20 // num_groups
-#         print(f"{i+1}/{num_groups}[{'=' * pgrs}>{' ' * (19 - pgrs)}]", end='\r')
-#     results_df = pd.DataFrame(results)
-#     avg_mae = results_df["mae"].mean()
-#     avg_rmse = results_df["rmse"].mean()
-#     avg_r2 = results_df["r2"].mean()
-#     return results_df, avg_mae, avg_rmse, avg_r2
+        mae, rmse, r2 = compute_metrics(y_true_denorm, y_pred_denorm, min_tgt, max_tgt)
+        results.append({
+            "Scenario": "_".join([str(s) for s in scenario_name]),
+            "mae": mae,
+            "rmse": rmse,
+            "r2": r2
+        })
+        pgrs = (i+1) * 20 // num_groups
+        print(f"{i+1}/{num_groups}[{'=' * pgrs}>{' ' * (19 - pgrs)}]", end='\r')
+    results_df = pd.DataFrame(results)
+    avg_mae = results_df["mae"].mean()
+    avg_rmse = results_df["rmse"].mean()
+    avg_r2 = results_df["r2"].mean()
+    return results_df, avg_mae, avg_rmse, avg_r2

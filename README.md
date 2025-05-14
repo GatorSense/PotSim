@@ -10,7 +10,29 @@ PotSim is a large-scale simulated agricultural dataset specifically designed for
 
 ## Features
 
+The repository contains three main files `example.ipynb`, `plots.ipynb`, and `run.py`. To reproduce the train/test results presented in the paper, we provide `run.py`, which can be executed over a command line interface or terminal. To follow a step by step procedure and work with our dataset, we provide `example.ipynb`, a jupyter notebook template, which act as a starting point for further exploration. To make it easier to visualize and plot the results, we have provided `plots.ipnb`, a jupyter notebook template, which contains few example plots and can be edited according the requirements.
+
 ---
+
+
+
+## Directory Structure:
+
+| Directory Name              | Description                                                                                  |
+|-----------------------------|----------------------------------------------------------------------------------------------|
+| `data`                      | Contains all datasets required for experiments and analyses.                                 |
+| `data/potsim_yearly`        | Default location for yearly dataset files utilized in the study.                             |
+| `models`                    | Houses all model architecture definitions and related scripts.                               |
+| `outputs`                   | Default directory for saving model checkpoints, logs, and results generated during training. |
+| `saves`                     | Stores pre-trained model states and checkpoints from experiments referenced in the paper.    |
+| `testing`                   | Includes scripts and functions for evaluating model performance and generating metrics.      |
+| `training`                  | Contains training routines, configuration files, and code for model optimization.            |
+| `utils`                     | Utility functions for data preprocessing, splitting, and model configuration management.     |
+| `utils/potsimloader`        | Specialized utilities for efficient data loading and processing workflows.                   |
+
+
+
+----
 
 ## Requirements
 
@@ -36,7 +58,12 @@ pip install torchmetrics==1.7.1 torchinfo==1.8
 
 If your system is not set up with `conda` package manager, then please visit [https://www.anaconda.com/download](https://www.anaconda.com/download/success#miniconda) to install `Miniconda` accoding to your operating system and then continue by installing the requirements from above.
 
-## Usage run.py
+
+
+
+----
+
+## Usage: `run.py`
 
 The script supports two main commands: `train` and `test`.
 

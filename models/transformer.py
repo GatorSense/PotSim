@@ -6,8 +6,8 @@ import torch.nn as nn
 class PositionalEncoding(nn.Module):
     def __init__(self, d_model, dropout=0.1, max_len=5000):
         super(PositionalEncoding, self).__init__()
-        self.d_model = self.d_model
-        self.max_len = self.max_len
+        self.d_model = d_model
+        self.max_len = max_len
         self.dropout = nn.Dropout(p=dropout)
 
         position = torch.arange(0, self.max_len, dtype=torch.float32).unsqueeze(1)

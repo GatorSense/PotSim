@@ -2,13 +2,13 @@
 
 This repository contains the official implementation associated with this paper. The corresponding dataset is publicly available [here](https://doi.org/10.7910/DVN/GQMDOV).
 
-# Description
+## Description:
 
 PotSim is a large-scale simulated agricultural dataset specifically designed for AI-driven research on potato cultivation. This dataset is grounded in real-world crop management scenarios and extrapolated to approximately 4.9 million hypothetical crop management scenarios. It encompasses diverse factors including varying planting dates, fertilizer application rates and timings, irrigation strategies, and 24 years of weather data. The resulting dataset comprises over 675 million daily simulation records, offering an extensive and realistic framework for agricultural AI research.
 
 ---
 
-## Features
+## Features:
 
 The repository contains three main files `example.ipynb`, `plots.ipynb`, and `run.py`. To reproduce the train/test results presented in the paper, we provide `run.py`, which can be executed over a command line interface or terminal. To follow a step by step procedure and work with our dataset, we provide `example.ipynb`, a jupyter notebook template, which act as a starting point for further exploration. To make it easier to visualize and plot the results, we have provided `plots.ipnb`, a jupyter notebook template, which contains few example plots and can be edited according the requirements.
 
@@ -34,7 +34,7 @@ The repository contains three main files `example.ipynb`, `plots.ipynb`, and `ru
 
 ----
 
-## Requirements
+## Requirements:
 
 To install the requirements:
 

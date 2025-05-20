@@ -98,7 +98,7 @@ def train_model(
     optimizer=None,
     scheduler=None,
     early_stop_patience: int = 10,
-    device=torch.device("cpu"),
+    device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     min_loss_reduction=1e-4,
 ):
     model.to(device)

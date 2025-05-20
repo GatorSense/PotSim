@@ -15,23 +15,23 @@ The `train_model` function in `train.py` serves as the core function used in our
 
 ### Parameters
 
-| Argument              | Type                        | Optional | Default                                                | Description                                                               |
-| --------------------- | --------------------------- | -------- | ------------------------------------------------------ | ------------------------------------------------------------------------- |
-| `model_name`          | `str`                       | No       |                                                        | Name identifier for the model (used for saving files).                    |
-| `model`               | `nn.Module`                 | No       |                                                        | PyTorch model instance to be trained.                                     |
-| `train_loader`        | `DataLoader`                | No       |                                                        | PyTorch DataLoader for the training dataset.                              |
-| `val_loader`          | `DataLoader`                | No       |                                                        | PyTorch DataLoader for the validation dataset.                            |
-| `tgt`                 | `str`                       | No       |                                                        | Target variable name (used for organizing saved models and logs).         |
-| `lr`                  | `float`                     | No       |                                                        | Initial learning rate for the optimizer.                                  |
-| `max_epochs`          | `int`                       | No       |                                                        | Maximum number of epochs to train the model.                              |
-| `min_tgt`             | `float` or `int`            | No       |                                                        | Minimum value of the `tgt` (e.g., for denormalization or R² calculation). |
-| `max_tgt`             | `float` or `int`            | No       |                                                        | Maximum value of the `tgt` (e.g., for denormalization or R² calculation). |
-| `criterion`           | `nn.Module`                 | Yes      | `MSELoss()`                                            | Loss function to be used for training.                                    |
-| `optimizer`           | `optim.Optimizer`           | Yes      | `SGD(params, lr, momentum=0.9)`                        | Optimizer to be used for training.                                        |
-| `scheduler`           | `lr_scheduler._LRScheduler` | Yes      | `ReduceLROnPlateau(optimizer, factor=0.5, patience=5)` | Learning rate scheduler                                                   |
-| `early_stop_patience` | `int`                       | Yes      | `10`                                                   | Epochs with no improvement on validation loss before stopping training.   |
-| `device`              | `torch.device`              | Yes      | `"cuda" if torch.cuda.is_available() else "cpu"`       | Torch device (`cpu` or `cuda`) on which to train the model.               |
-| `min_loss_reduction`  | `float`                     | Yes      | `1e-4`                                                 | Minimum reduction in validation loss to be considered an improvement      |
+| Argument              | Type                                    | Optional | Description                                                                                                                            |
+| --------------------- | --------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `model_name`          | `str`                                   | No       | Name identifier for the model (used for saving files).                                                                                 |
+| `model`               | `torch.nn.Module`                       | No       | PyTorch model instance to be trained.                                                                                                  |
+| `train_loader`        | `torch.utils.data.DataLoader`           | No       | DataLoader for the training dataset.                                                                                                   |
+| `val_loader`          | `torch.utils.data.DataLoader`           | No       | DataLoader for the validation dataset.                                                                                                 |
+| `tgt`                 | `str`                                   | No       | Target variable name (used for organizing saved models and logs).                                                                      |
+| `lr`                  | `float`                                 | No       | Initial learning rate for the optimizer.                                                                                               |
+| `max_epochs`          | `int`                                   | No       | Maximum number of epochs to train the model.                                                                                           |
+| `min_tgt`             | `float` or `int`                        | No       | Minimum value of the `tgt` (e.g., for denormalization or R² calculation).                                                              |
+| `max_tgt`             | `float` or `int`                        | No       | Maximum value of the `tgt` (e.g., for denormalization or R² calculation).                                                              |
+| `criterion`           | `torch.nn.Module`                       | Yes      | Loss function to be used for training. Defaults to `torch.nn.MSELoss()`                                                                |
+| `optimizer`           | `torch.optim.Optimizer`                 | Yes      | Optimizer to be used for training Defaults to `torch.optim.SGD(params, lr, momentum=0.9)`                                              |
+| `scheduler`           | `torch.optim.lr_scheduler._LRScheduler` | Yes      | Learning rate scheduler. Defaults to `ReduceLROnPlateau(optimizer, factor=0.5, patience=5)`                                            |
+| `early_stop_patience` | `int`                                   | Yes      | Epochs with no improvement on validation loss before stopping training. Defaults to Defaults to `10`                                   |
+| `device`              | `torch.device`                          | Yes      | Torch device (`cpu` or `cuda`) on which to train the model. Defaults to `torch.device("cuda" if torch.cuda.is_available() else "cpu")` |
+| `min_loss_reduction`  | `float`                                 | Yes      | Minimum reduction in validation loss to be considered an improvement. Defaults to `Defaults to 1e-4`                                   |
 
 ### Usage Example
 

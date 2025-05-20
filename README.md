@@ -18,17 +18,17 @@ The repository contains three main files `example.ipynb`, `plots.ipynb`, and `ru
 
 ## Directory Structure:
 
-| Directory Name              | Description                                                                                  |
-|-----------------------------|----------------------------------------------------------------------------------------------|
-| `data`                      | Contains all datasets required for experiments and analyses.                                 |
-| `data/potsim_yearly`        | Default location for yearly dataset files utilized in the study.                             |
-| `models`                    | Houses all model architecture definitions and related scripts.                               |
-| `outputs`                   | Default directory for saving model checkpoints, logs, and results generated during training. |
-| `saves`                     | Stores pre-trained model states and checkpoints from experiments referenced in the paper.    |
-| `testing`                   | Includes scripts and functions for evaluating model performance and generating metrics.      |
-| `training`                  | Contains training routines, configuration files, and code for model optimization.            |
-| `utils`                     | Utility functions for data preprocessing, splitting, and model configuration management.     |
-| `utils/potsimloader`        | Specialized utilities for efficient data loading and processing workflows.                   |
+| Directory Name       | Description                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------------- |
+| `data`               | Contains all datasets required for experiments and analyses.                                 |
+| `data/potsim_yearly` | Default location for yearly dataset files utilized in the study.                             |
+| `models`             | Houses all model architecture definitions and related scripts.                               |
+| `outputs`            | Default directory for saving model checkpoints, logs, and results generated during training. |
+| `saves`              | Stores pre-trained model states and checkpoints from experiments referenced in the paper.    |
+| `testing`            | Includes scripts and functions for evaluating model performance and generating metrics.      |
+| `training`           | Contains training routines, configuration files, and code for model optimization.            |
+| `utils`              | Utility functions for data preprocessing, splitting, and model configuration management.     |
+| `utils/potsimloader` | Specialized utilities for efficient data loading and processing workflows.                   |
 
 
 
@@ -84,17 +84,17 @@ python run.py train -tgt -m  [options]
 
 **Arguments:**
 
-| Argument                    | Type  | Required | Default       | Description                                      |
+| Argument                    | Type  | Optional | Default       | Description                                      |
 | --------------------------- | ----- | -------- | ------------- | ------------------------------------------------ |
-| `-tgt`, `--target`          | str   | Yes      |               | Target variable to predict. Choices: _see below_ |
-| `-m`, `--model`             | str   | Yes      |               | Model type to use. Choices: _see below_          |
-| `-tdata`, `--train_dataset` | str   | No       | `train_split` | Training dataset split                           |
-| `-vdata`, `--val_dataset`   | str   | No       | `val_split`   | Validation dataset split                         |
-| `-bs`, `--batch_size`       | int   | No       | `256`         | Batch size                                       |
-| `-lr`, `--learning_rate`    | float | No       | `0.005`       | Learning rate                                    |
-| `-ep`, `--epochs`           | int   | No       | `100`         | Maximum number of epochs                         |
-| `-sl`, `--seq_len`          | int   | No       | `15`          | Sequence length (for sequence models)            |
-| `-d`, `--device`            | str   | No       | `None`        | Device: `cpu` or `cuda`                          |
+| `-tgt`, `--target`          | str   | No       |               | Target variable to predict. Choices: _see below_ |
+| `-m`, `--model`             | str   | No       |               | Model type to use. Choices: _see below_          |
+| `-tdata`, `--train_dataset` | str   | Yes      | `train_split` | Training dataset split                           |
+| `-vdata`, `--val_dataset`   | str   | Yes      | `val_split`   | Validation dataset split                         |
+| `-bs`, `--batch_size`       | int   | Yes      | `256`         | Batch size                                       |
+| `-lr`, `--learning_rate`    | float | Yes      | `0.005`       | Learning rate                                    |
+| `-ep`, `--epochs`           | int   | Yes      | `100`         | Maximum number of epochs                         |
+| `-sl`, `--seq_len`          | int   | Yes      | `15`          | Sequence length (for sequence models)            |
+| `-d`, `--device`            | str   | Yes      | `None`        | Device: `cpu` or `cuda`                          |
 
 **Example:**
 
@@ -112,15 +112,15 @@ python run.py test -tgt  -m  -data  [options]
 
 **Arguments:**
 
-| Argument               | Type | Required | Default | Description                                                     |
+| Argument               | Type | Optional | Default | Description                                                     |
 | ---------------------- | ---- | -------- | ------- | --------------------------------------------------------------- |
-| `-tgt`, `--target`     | str  | Yes      |         | Target variable to predict. Choices: _see below_                |
-| `-m`, `--model`        | str  | Yes      |         | Model type to use. Choices: _see below_                         |
-| `-data`, `--dataset`   | str  | Yes      |         | Dataset to run test on                                          |
-| `-mdir`, `--model_dir` | str  | No       | `saves` | Directory where trained models are saved (`outputs` or `saves`) |
-| `-bs`, `--batch_size`  | int  | No       | `256`   | Batch size                                                      |
-| `-sl`, `--seq_len`     | int  | No       | `15`    | Sequence length (for sequence models)                           |
-| `-d`, `--device`       | str  | No       | `None`  | Device: `cpu` or `cuda`                                         |
+| `-tgt`, `--target`     | str  | No       |         | Target variable to predict. Choices: _see below_                |
+| `-m`, `--model`        | str  | No       |         | Model type to use. Choices: _see below_                         |
+| `-data`, `--dataset`   | str  | No       |         | Dataset to run test on                                          |
+| `-mdir`, `--model_dir` | str  | Yes      | `saves` | Directory where trained models are saved (`outputs` or `saves`) |
+| `-bs`, `--batch_size`  | int  | Yes      | `256`   | Batch size                                                      |
+| `-sl`, `--seq_len`     | int  | Yes      | `15`    | Sequence length (for sequence models)                           |
+| `-d`, `--device`       | str  | Yes      | `None`  | Device: `cpu` or `cuda`                                         |
 
 **Example:**
 
@@ -134,8 +134,8 @@ python run.py test -tgt="NTotL1" -m="lstm" -data="test_split" -mdir="saves" -bs=
 
 `R2` Metrics for Different Models
 
-| Target   | CNN1D | Transformer | LSTM  | LinearRegression | MLP   | TCN   |
-| -------- | ----- | ----------- | ----- | ---------------- | ----- | ----- |
+| Target     | CNN1D | Transformer | LSTM  | LinearRegression | MLP   | TCN   |
+| ---------- | ----- | ----------- | ----- | ---------------- | ----- | ----- |
 | `NLeach`   | 0.432 | -0.02       | 0.343 | 0.002            | 0.014 | 0.265 |
 | `NPlantUp` | 0.803 | 0.733       | 0.794 | 0.322            | 0.753 | 0.791 |
 | `NTotL1`   | 0.843 | 0.764       | 0.831 | 0.481            | 0.779 | 0.823 |

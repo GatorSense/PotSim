@@ -9,6 +9,10 @@ import math
 import json
 from pathlib import Path
 import warnings
+import sys
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+parent_dir = Path(__file__).resolve().parents[3]
+sys.path.append(str(parent_dir))
 
 # globally ignore all warnings
 warnings.filterwarnings("ignore")
@@ -290,7 +294,7 @@ crit  = nn.MSELoss()
 # ########################
 
 # # #Reteiving the saved weights for this model
-saved_model_file="saves/NLeach/NLeach_forecasting_EncoderOnlyTransformer.pth"
+saved_model_file="../NLeach_forecasting_EncoderOnlyTransformer.pth"
 
 # # #Loading the model with saved weights
 model.load_state_dict(torch.load(saved_model_file))

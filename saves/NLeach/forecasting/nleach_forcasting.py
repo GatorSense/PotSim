@@ -337,9 +337,9 @@ def plot_episode(model,data,year,tmt,pl,w):
 #########################
 
 
-year_inp=int(input("Enter Year"))
+year_inp=int(input("Enter Year -one value from 2014 through 2023 |  "))
 treat_inp=str(input("Enter Treatment-from these combinations:56,112,168,0,196, eg: 56-0-56 |   "))
-pl_inp=int(input("Enter planting day: 22 or 43"))
+pl_inp=int(input("Enter one planting day value out of  29 and  43 |  "))
 
 
 

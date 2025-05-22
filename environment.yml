@@ -39,3 +39,4 @@ dependencies:
   - py-xgboost=3.0
   - shap=0.47
   - tqdm=4.67
+  - openpyxl=3.1

@@ -136,14 +136,12 @@ df=pd.read_excel("../../../data/forecasting_data_subset.xlsx")
 #Feature Processing and data scaling
 
 scaler=MinMaxScaler()
-
 X,y= df[['PlantingDay', 'DayAfterPlant', 'NApp','Rain', 'SolarRad', 'AirTempC']], df['NLeach']
 y=np.array(y).reshape(y.shape[0],1)
 req_cols=['Year','Treatment','PlantingDay','DayAfterPlant','NApp','Rain','SolarRad','AirTempC','NLeach']
 data_cols=df[req_cols]
 copy_data=data_cols.copy()
 copy_data.iloc[:,3:].fillna(0,inplace=True)
-scaler=MinMaxScaler()
 copy_data.iloc[:,3:]=scaler.fit_transform(copy_data.iloc[:,3:])
 
 #######################

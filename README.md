@@ -24,13 +24,13 @@ The repository contains three main files `example.ipynb`, `plots.ipynb`, and `ru
 | `data/potsim_yearly` | Default location for yearly dataset files utilized in the study.                             |
 | `models`             | Houses all model architecture definitions and related scripts.                               |
 | `outputs`            | Default directory for saving model checkpoints, logs, and results generated during training. |
-| `saves`              | Stores pre-trained model states and checkpoints from experiments referenced in the paper.    |
+| `saves`              | Includes saved model states and checkpoints for all trained models and variables, as well as a Python script from an initial forecasting experiment.|
 | `testing`            | Includes scripts and functions for evaluating model performance and generating metrics.      |
 | `training`           | Contains training routines, configuration files, and code for model optimization.            |
 | `utils`              | Utility functions for data preprocessing, splitting, and model configuration management.     |
 | `utils/potsimloader` | Specialized utilities for efficient data loading and processing workflows.                   |
 
-
+<!-- Stores pre-trained model states and checkpoints from trained models and experiments referenced in the paper.-->
 
 ----
 
